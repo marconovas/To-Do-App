@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TaskForm from "./Components/TaskForm";
 import { Card, Container } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
 
 function App() {
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const storedTasks = localStorage.getItem("tasks");
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
 
   const addTask = (newTask) => {
     setTasks(prev => [...prev, newTask]);
@@ -25,6 +28,10 @@ function App() {
       prev.filter(task => task.id !== id)
     )
   }
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className="min-vh-100 d-flex align-items-center bg-light">
