@@ -1,7 +1,7 @@
 import { Button, Card } from "react-bootstrap";
 
 
-export default function TaskItem ({ task, onComplete, onDelete }) {
+export default function TaskItem ({ task, onComplete, onDelete, onEdit}) {
     return(
         <Card>
             <Card.Body>
@@ -14,7 +14,10 @@ export default function TaskItem ({ task, onComplete, onDelete }) {
                         checked={task.completed}
                         onChange={() => onComplete(task.id)}/>
                 </Card.Text>
-                <Button onClick={() => onDelete(task.id)}>Delete Task</Button>
+                <div className="d-flex justify-content-evenly align-content-center">
+                    <Button variant="danger" onClick={() => onDelete(task.id)}>Delete Task</Button>
+                    <Button variant="warning" onClick={() => onEdit(task)}>Edit Task</Button>
+                </div>
             </Card.Body>
         </Card>
     )

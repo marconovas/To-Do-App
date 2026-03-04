@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import TaskForm from "./Components/TaskForm";
-import { Card, Container } from "react-bootstrap";
+import { Button, Card, Container, FormControl, Modal, ModalFooter, ModalTitle } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
 
@@ -11,6 +11,10 @@ function App() {
     return storedTasks ? JSON.parse(storedTasks) : [];
   });
   const [filter, setFilter] = useState("all");
+
+  ///EDITING
+  const [editingTask, setEditingTask] = useState(null);
+  const [editText, setEditText] = useState("");
 
   const filteredTasks = 
   filter === "active" ?
@@ -38,6 +42,11 @@ function App() {
     )
   }
 
+  const handleEdit = (task) => {
+    setEditingTask(task);
+    setEditText(task.text);
+  }
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -53,8 +62,44 @@ function App() {
           
           <FilterBar setFilter={setFilter}/>
 
-          <TaskList tasks={filteredTasks} onComplete={completeTask} onDelete={deleteTask}/>
+          <TaskList 
+              tasks={filteredTasks} 
+              onComplete={completeTask} 
+              onDelete={deleteTask}
+              onEdit={handleEdit}
+          />
 
+          <Modal 
+            show={editingTask !== null}
+            onHide={() => setEditingTask(null)}
+          >
+            <Modal.Header closeButton>
+              <ModalTitle>Edit Task</ModalTitle>
+            </Modal.Header>
+
+            <Modal.Body>
+              <FormControl type="text" placeholder={editText} value={editText} onChange={e => setEditText(e.target.value)}/>
+            </Modal.Body>
+                  
+            <Modal.Footer>
+              <Button 
+                variant="primary" 
+                onClick={() => {
+                  setTasks(prev => 
+                    prev.map(task => 
+                      task.id === editingTask.id
+                      ? { ...task, text: editText }
+                      : task
+                    )
+                  );
+
+                  setEditingTask(null);
+                }}
+              >
+                Finish
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Card>
 
       </Container>
