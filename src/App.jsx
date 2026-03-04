@@ -6,9 +6,24 @@ import TaskList from "./Components/TaskList";
 function App() {
 
   const [tasks, setTasks] = useState([]);
-  
+
   const addTask = (newTask) => {
     setTasks(prev => [...prev, newTask]);
+  }
+
+  const completeTask = (id) => {
+    setTasks(prev => 
+      prev.map(task => 
+        task.id === id ? 
+        {...task, completed: !task.completed} : task
+      )
+    );
+  }
+
+  const deleteTask = (id) => {
+    setTasks(prev => 
+      prev.filter(task => task.id !== id)
+    )
   }
 
   return (
@@ -18,11 +33,10 @@ function App() {
           <h2 className="text-center mb-4">Task Manager</h2>
 
           <TaskForm addTasks={addTask}/>
+          <TaskList tasks={tasks} onComplete={completeTask} onDelete={deleteTask}/>
         </Card>
 
-        <TaskList tasks={tasks}/>
       </Container>
-      
     </div>
   )
 }

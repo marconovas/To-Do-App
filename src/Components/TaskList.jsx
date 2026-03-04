@@ -1,7 +1,7 @@
 import TaskItem from "./TaskItem"
 
 
-export default function TaskList ({ tasks }) {
+export default function TaskList ({ tasks, onComplete, onDelete }) {
     if(tasks.length === 0){
         return <p className="text-center text-muted">No Tasks yet</p>
     }
@@ -10,7 +10,7 @@ export default function TaskList ({ tasks }) {
         <div>
             {tasks.map(task => (
                 <div key={task.id}>
-                    <TaskItem task={task}/>
+                    <TaskItem task={task} onComplete={onComplete} onDelete={onDelete}/>
                 </div>
             ))}
         </div>
