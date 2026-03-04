@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import TaskForm from "./Components/TaskForm";
 import { Card, Container } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
+import FilterBar from "./Components/FilterBar";
 
 function App() {
 
@@ -9,6 +10,14 @@ function App() {
     const storedTasks = localStorage.getItem("tasks");
     return storedTasks ? JSON.parse(storedTasks) : [];
   });
+  const [filter, setFilter] = useState("all");
+
+  const filteredTasks = 
+  filter === "active" ?
+    tasks.filter(task => !task.completed) :
+  filter === "completed" ?
+    tasks.filter(task => task.completed) 
+  : tasks;
 
   const addTask = (newTask) => {
     setTasks(prev => [...prev, newTask]);
@@ -39,8 +48,13 @@ function App() {
         <Card className="p-4 shadow-sm border-0">
           <h2 className="text-center mb-4">Task Manager</h2>
 
+
           <TaskForm addTasks={addTask}/>
-          <TaskList tasks={tasks} onComplete={completeTask} onDelete={deleteTask}/>
+          
+          <FilterBar setFilter={setFilter}/>
+
+          <TaskList tasks={filteredTasks} onComplete={completeTask} onDelete={deleteTask}/>
+
         </Card>
 
       </Container>
