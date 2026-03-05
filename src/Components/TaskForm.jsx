@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap";
 export default function TaskForm ({ addTasks }) {
     
     const [text, setText] = useState("");
-    const [priority, setPriority] = useState(null);
+    const [priority, setPriority] = useState("none");
 
     const HandleSubmit = (e) => {
         e.preventDefault();
@@ -31,11 +31,15 @@ export default function TaskForm ({ addTasks }) {
                     value={text}
                     onChange={e => setText(e.target.value)}
                 />
-                <Form.Select className="mt-2 mb-2">
-                    <option>Select priority</option>
-                    <option value={1} onClick={() => setPriority("low")}>Low</option>
-                    <option value={2} onClick={() => setPriority("medium")}>Medium</option>
-                    <option value={3} onClick={() => setPriority("high")}>High</option>
+                <Form.Select 
+                    className="mt-2 mb-2"
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                >
+                    <option value="none">Select priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                 </Form.Select>
             </Form.Group>
 

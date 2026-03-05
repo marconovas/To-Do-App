@@ -30,7 +30,6 @@ function App() {
   //SEARCHING
   const [searchTask, setSearchTask] = useState("");
 
-
   //FILTERS
   const filteredTasks = 
     tasks.filter(task => {
@@ -42,7 +41,7 @@ function App() {
       if(priorityFilter === "all") return true;
       return task.priority === priorityFilter;
     })
-    .filter(task => {
+    .filter(task => { //SEARCH TASK
       return task.text
       .toLowerCase()
       .includes(searchTask.trim().toLowerCase());
@@ -97,6 +96,14 @@ function App() {
 
           <SearchBar searchTask={searchTask} setSearchTask={setSearchTask} />
 
+          {searchTask && 
+            <Button 
+              variant="primary"
+              onClick={() => setSearchTask("")}
+            >
+              Remove Search
+            </Button>}
+
           <TaskForm addTasks={addTask}/>
           
           <FilterBar setFilter={setStatusFilter} setPriorityFilter={setPriorityFilter}/>
@@ -117,7 +124,7 @@ function App() {
           {/* CONFIRM DELETE */}
           <Modal
             show={taskToDelete !== null}
-            onHide={() => taskToDelete(null)}
+            onHide={() => setTaskToDelete(null)}
           >
             <Modal.Header closeButton>
               <Modal.Title>Are you sure?</Modal.Title>
@@ -158,11 +165,15 @@ function App() {
               <h2>Task description:</h2>
               <FormControl type="text" placeholder={editText} value={editText} onChange={e => setEditText(e.target.value)}/>
               <h2>Task Priority:</h2>
-              <Form.Select className="mt-2 mb-2">
-                <option>Select priority</option>
-                <option value={1} onClick={() => setEditPriority("low")}>Low</option>
-                <option value={2} onClick={() => setEditPriority("medium")}>Medium</option>
-                <option value={3} onClick={() => setEditPriority("high")}>High</option>
+              <Form.Select 
+                className="mt-2 mb-2"
+                value={editPriority}
+                onChange={(e) => setEditPriority(e.target.value)}
+              >
+                <option value="no priority">Select priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
               </Form.Select>
             </Modal.Body>
                   

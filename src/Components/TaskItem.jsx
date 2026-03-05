@@ -5,8 +5,8 @@ export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
     const priorityColor = () => {
         if(task.priority === "low") return "success";
         if (task.priority === "medium") return "warning";
-        if(task.priority === "high") return "danger"
-        return "secondary";
+        if(task.priority === "high") return "danger";
+        return "secondary"; //none
     }
     
     return(
@@ -14,7 +14,7 @@ export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
             <Card.Body>
                 <Card.Title>
                     <Badge className="me-2" bg={priorityColor()}>
-                        {task.priority ? task.priority : "No priority"}
+                        {task.priority || "no priority"}
                     </Badge>
 
                     {task.text}
