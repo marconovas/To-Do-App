@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap";
 export default function TaskForm ({ addTasks }) {
     
     const [text, setText] = useState("");
-    const [priority, setPriority] = useState("");
+    const [priority, setPriority] = useState(null);
 
     const HandleSubmit = (e) => {
         e.preventDefault();

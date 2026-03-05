@@ -12,7 +12,8 @@ function App() {
     const storedTasks = localStorage.getItem("tasks");
     return storedTasks ? JSON.parse(storedTasks) : [];
   });
-  const [filter, setFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
 
   ///EDITING
   const [editingTask, setEditingTask] = useState(null);
@@ -25,11 +26,15 @@ function App() {
   const totalTasks = active.length + finished.length;
 
   const filteredTasks = 
-  filter === "active" ?
-    tasks.filter(task => !task.completed) :
-  filter === "completed" ?
-    tasks.filter(task => task.completed) 
-  : tasks;
+    tasks.filter(task => {
+      if (statusFilter === "active") return !task.completed;
+      if(statusFilter === "completed") return task.completed;
+      return true;
+    })
+    .filter(task => {
+      if(priorityFilter === "all") return true;
+      return task.priority === priorityFilter;
+    });
 
   const addTask = (newTask) => {
     setTasks(prev => [...prev, newTask]);
@@ -75,11 +80,12 @@ function App() {
     <div className="min-vh-100 d-flex align-items-center bg-light">
       <Container style={{ maxWidth: "500px" }}>
         <Card className="p-4 shadow-sm border-0">
+
           <h2 className="text-center mb-4">Task Manager</h2>
 
           <TaskForm addTasks={addTask}/>
           
-          <FilterBar setFilter={setFilter}/>
+          <FilterBar setFilter={setStatusFilter} setPriorityFilter={setPriorityFilter}/>
 
           <TaskCounter active={active.length} finished={finished.length} total={totalTasks}/>
 

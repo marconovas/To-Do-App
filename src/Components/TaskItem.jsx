@@ -3,21 +3,18 @@ import { Badge, Button, Card } from "react-bootstrap";
 
 export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
     const priorityColor = () => {
-        if(task.priority === "low"){
-            return "success";
-        } else if( task.priority === "medium"){
-            return "warning"
-        } else{
-            return "danger"
-        }
+        if(task.priority === "low") return "success";
+        if (task.priority === "medium") return "warning";
+        if(task.priority === "high") return "warning"
+        return "secondary";
     }
     
     return(
-        <Card>
+        <Card className="mb-2">
             <Card.Body>
                 <Card.Title>
                     <Badge className="me-2" bg={priorityColor()}>
-                        {task.priority}
+                        {task.priority ? task.priority : "No priority"}
                     </Badge>
                     {task.text}
                 </Card.Title>
