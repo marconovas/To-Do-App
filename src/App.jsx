@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import TaskForm from "./Components/TaskForm";
-import { Button, Card, Container, FormControl, Modal, ModalTitle } from "react-bootstrap";
+import { Button, Card, Container, Form, FormControl, Modal, ModalTitle } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
 import TaskCounter from "./Components/TaskCounter";
@@ -18,6 +18,7 @@ function App() {
   ///EDITING
   const [editingTask, setEditingTask] = useState(null);
   const [editText, setEditText] = useState("");
+  const [editPriority, setEditPriority] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
   //TASK COUNTERS
@@ -25,6 +26,8 @@ function App() {
   const finished = tasks.filter(task => task.completed);
   const totalTasks = active.length + finished.length;
 
+
+  //FILTERS
   const filteredTasks = 
     tasks.filter(task => {
       if (statusFilter === "active") return !task.completed;
@@ -141,7 +144,15 @@ function App() {
             </Modal.Header>
 
             <Modal.Body>
+              <h2>Task description:</h2>
               <FormControl type="text" placeholder={editText} value={editText} onChange={e => setEditText(e.target.value)}/>
+              <h2>Task Priority:</h2>
+              <Form.Select className="mt-2 mb-2">
+                <option>Select priority</option>
+                <option value={1} onClick={() => setEditPriority("low")}>Low</option>
+                <option value={2} onClick={() => setEditPriority("medium")}>Medium</option>
+                <option value={3} onClick={() => setEditPriority("high")}>High</option>
+              </Form.Select>
             </Modal.Body>
                   
             <Modal.Footer>
@@ -151,7 +162,7 @@ function App() {
                   setTasks(prev => 
                     prev.map(task => 
                       task.id === editingTask.id
-                      ? { ...task, text: editText }
+                      ? { ...task, text: editText, priority: editPriority }
                       : task
                     )
                   );
