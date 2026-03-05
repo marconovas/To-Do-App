@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import TaskForm from "./Components/TaskForm";
-import { Button, Card, Container, FormControl, Modal, ModalFooter, ModalTitle } from "react-bootstrap";
+import { Button, Card, Container, FormControl, Modal, ModalTitle } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
 import TaskCounter from "./Components/TaskCounter";
