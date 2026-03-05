@@ -1,38 +1,52 @@
 import { Badge, Button, Card } from "react-bootstrap";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import "./TaskCard.css";
 
 export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
+    
+    /*
     const priorityColor = () => {
         if(task.priority === "low") return "success";
         if (task.priority === "medium") return "warning";
         if(task.priority === "high") return "danger";
         return "secondary"; //none
     }
+    */
 
     const {attributes, listeners, setNodeRef, transform, transition} = useSortable({ id: task.id });
     
     return(
         <div 
             ref={setNodeRef}
-            {...attributes}
-            {...listeners}
             style={{
                 transform: CSS.Transform.toString(transform),
                 transition
             }}
         >
 
-            <Card className="mb-2">
+            <Card className="task-card">
                 <Card.Body>
-                    <Card.Title>
-                        <Badge className="me-2" bg={priorityColor()}>
-                            {task.priority || "no priority"}
-                        </Badge>
+                    <Card.Title className="d-flex justify-content-between">
+                        <div className="d-flex align-items-center gap-2">
+                            <span
+                                {...attributes}
+                                {...listeners}
+                                className="drag-handle"
+                            >
+                                ☰
+                            </span>
 
-                        {task.text}
+                            <Badge className={`priority-${task.priority || "none"}`}>
+                                {task.priority || "no priority"}
+                            </Badge>
 
+                            <span className={task.completed? "text-decoration-line-through" : ""}>
+                                {task.text}
+                            </span>
+                        </div>
                     </Card.Title>
+
                     <Card.Text>
                         Date: {new Date(task.createdAt).toLocaleDateString()}<br/>
                         Completed: 
@@ -42,9 +56,13 @@ export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
                             onChange={() => onComplete(task.id)}
                         />
                     </Card.Text>
+
                     <div className="d-flex justify-content-evenly align-content-center">
-                        <Button variant="danger" onClick={() => onDelete(task.id)}>Delete Task</Button>
-                        <Button variant="warning" onClick={() => onEdit(task)}>Edit Task</Button>
+                    
+                        <Button variant="outline-danger" size="sm" onClick={() => onDelete(task.id)}>Delete Task</Button>
+                    
+                        <Button variant="outline-warning" size="sm" onClick={() => onEdit(task)}>Edit Task</Button>
+                    
                     </div>
                 </Card.Body>
             </Card>

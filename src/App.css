@@ -1,0 +1,8 @@
+.app-background{
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+button{
+  transition: all 0.15s ease;
+}

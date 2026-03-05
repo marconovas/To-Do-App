@@ -1,0 +1,48 @@
+.task-card{
+  border: none;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: all 0.15s ease;
+}
+
+.priority-high{
+  background-color: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-weight: 500;
+}
+
+.priority-medium{
+  background-color: #fef3c7 !important;
+  color: #d97706 !important;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-weight: 500;
+}
+
+.priority-low{
+  background-color: #dcfce7 !important;
+  color: #16a34a !important;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-weight: 500;
+}
+
+.priority-none{
+  background-color: #e5e7eb !important;
+  color: #6b7280 !important;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.drag-handle{
+  cursor: grab;
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.drag-handle:active{
+  cursor: grabbing;
+}

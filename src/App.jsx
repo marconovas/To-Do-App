@@ -8,6 +8,7 @@ import ClearButton from "./Components/ClearButton";
 import SearchBar from "./Components/SearchBar";
 import Sort from "./Components/Sort";
 import { arrayMove } from "@dnd-kit/sortable";
+import "./App.css";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
   ///EDITING
   const [editingTask, setEditingTask] = useState(null);
   const [editText, setEditText] = useState("");
-  const [editPriority, setEditPriority] = useState(null);
+  const [editPriority, setEditPriority] = useState("none");
   const [taskToDelete, setTaskToDelete] = useState(null);
 
   //TASK COUNTERS
@@ -128,7 +129,7 @@ function App() {
   }, [tasks]);
 
   return (
-    <div className="min-vh-100 d-flex align-items-center bg-light">
+    <div className="app-background d-flex justify-content-center py-5">
       <Container style={{ maxWidth: "500px" }}>
         <Card className="p-4 shadow-sm border-0">
 
@@ -140,6 +141,7 @@ function App() {
             <Button 
               variant="primary"
               onClick={() => setSearchTask("")}
+              className="mb-2"
             >
               Remove Search
             </Button>}
@@ -203,6 +205,7 @@ function App() {
             </Modal.Footer>
           </Modal>
 
+          {/* EDITING MODAL */}
           <Modal 
             show={editingTask !== null}
             onHide={() => setEditingTask(null)}
