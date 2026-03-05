@@ -1,5 +1,5 @@
 import { Button, Container } from "react-bootstrap";
-import "./FilterBar.css";
+import "../Css/FilterBar.css";
 
 export default function FilterBar ({ setFilter, setPriorityFilter }) {
     return(

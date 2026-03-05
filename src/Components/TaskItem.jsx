@@ -1,7 +1,7 @@
 import { Badge, Button, Card } from "react-bootstrap";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import "./TaskCard.css";
+import "../Css/TaskCard.css";
 
 export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
 

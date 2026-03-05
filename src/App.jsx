@@ -8,7 +8,7 @@ import ClearButton from "./Components/ClearButton";
 import SearchBar from "./Components/SearchBar";
 import Sort from "./Components/Sort";
 import { arrayMove } from "@dnd-kit/sortable";
-import "./App.css";
+import "./Css/App.css";
 
 function App() {
 

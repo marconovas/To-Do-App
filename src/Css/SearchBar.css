@@ -1,0 +1,10 @@
+.search-bar {
+  background: #f8fafc; /* suave y consistente con TaskForm */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-bar .btn {
+  font-weight: 500;
+  border-radius: 8px;
+}
