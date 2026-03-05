@@ -35,6 +35,12 @@ function App() {
   //TASK PRIORITY
   const [sortOrder, setSortOrder] = useState("none");
 
+  const dragEnabled =  //ENABLE DRAG N DROP IF ALL FILTERS ARE DISABLED
+    statusFilter === "all" &&
+    priorityFilter === "all" &&
+    searchTask == "" &&
+    sortOrder === "none";
+
   const priorityOrder = {
     high: 3,
     medium: 2,
@@ -103,6 +109,7 @@ function App() {
     setTasks(tasks.filter(task => !task.completed));
   }
 
+  //DRAG AND DROP
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
@@ -149,12 +156,19 @@ function App() {
 
           <Sort setSort={setSortOrder}/>
 
+          {!dragEnabled && (
+            <small className="text-center text-muted mb-2">
+              Drag & Drop disabled while filters or sorting are active
+            </small>
+          )}
+
           <TaskList 
               tasks={filteredTasks} 
               onComplete={completeTask} 
               onDelete={confirmDelete}
               onEdit={handleEdit}
               handleDragEnd={handleDragEnd}
+              dragEnabled={dragEnabled}
           />
 
           {/* CONFIRM DELETE MODAL */}
