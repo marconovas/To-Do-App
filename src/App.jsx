@@ -7,6 +7,7 @@ import TaskCounter from "./Components/TaskCounter";
 import ClearButton from "./Components/ClearButton";
 import SearchBar from "./Components/SearchBar";
 import Sort from "./Components/Sort";
+import { arrayMove } from "@dnd-kit/sortable";
 
 function App() {
 
@@ -102,6 +103,19 @@ function App() {
     setTasks(tasks.filter(task => !task.completed));
   }
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if(active.id !== over.id) {
+      setTasks((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      })
+    }
+  }
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -140,6 +154,7 @@ function App() {
               onComplete={completeTask} 
               onDelete={confirmDelete}
               onEdit={handleEdit}
+              handleDragEnd={handleDragEnd}
           />
 
           {/* CONFIRM DELETE MODAL */}
