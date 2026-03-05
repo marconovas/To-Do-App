@@ -1,8 +1,47 @@
-.app-background{
-  background: #f6f7fb;
-  min-height: 100vh;
+.main-card{
+  background: linear-gradient(180deg,#ffffff,#f8fafc);
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  padding:28px;
+}
+
+.main-card > *{
+  margin-bottom:14px;
+}
+
+.app-title{
+  font-weight:600;
+  letter-spacing:0.5px;
+  color:#1f2937;
+}
+
+h2{
+  font-weight:700;
+  letter-spacing:0.5px;
 }
 
 button{
-  transition: all 0.15s ease;
+  border-radius:10px !important;
+  font-weight:500;
+  transition:all 0.2s ease;
+}
+
+button:hover{
+  transform:translateY(-1px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #60a5fa) !important;
+}
+
+input,
+select{
+  border-radius:10px !important;
+  padding:10px !important;
+}
+
+#root {
+  min-height: 100vh;
 }

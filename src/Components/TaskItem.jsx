@@ -4,15 +4,6 @@ import { CSS } from "@dnd-kit/utilities";
 import "./TaskCard.css";
 
 export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
-    
-    /*
-    const priorityColor = () => {
-        if(task.priority === "low") return "success";
-        if (task.priority === "medium") return "warning";
-        if(task.priority === "high") return "danger";
-        return "secondary"; //none
-    }
-    */
 
     const {attributes, listeners, setNodeRef, transform, transition} = useSortable({ id: task.id });
     
@@ -37,9 +28,9 @@ export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
                                 ☰
                             </span>
 
-                            <Badge className={`priority-${task.priority || "none"}`}>
+                            <span className={`priority-${task.priority || "none"}`}>
                                 {task.priority || "no priority"}
-                            </Badge>
+                            </span>
 
                             <span className={task.completed? "text-decoration-line-through" : ""}>
                                 {task.text}
@@ -49,7 +40,7 @@ export default function TaskItem ({ task, onComplete, onDelete, onEdit }) {
 
                     <Card.Text>
                         Date: {new Date(task.createdAt).toLocaleDateString()}<br/>
-                        Completed: 
+                        Completed <span> </span> 
                         <input 
                             type="checkbox"
                             checked={task.completed}

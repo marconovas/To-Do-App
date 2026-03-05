@@ -1,9 +1,19 @@
 .task-card{
-  border: none;
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: all 0.15s ease;
+  border-radius:12px;
+  border:none;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+  transition:all 0.15s ease;
+}
+
+.task-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+.badge{
+  font-weight:500;
+  padding:6px 10px;
+  border-radius:8px;
 }
 
 .priority-high{
@@ -38,9 +48,8 @@
 }
 
 .drag-handle{
-  cursor: grab;
-  font-size: 18px;
-  opacity: 0.6;
+  background:#f1f5f9;
+  border-radius:6px;
 }
 
 .drag-handle:active{

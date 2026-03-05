@@ -1,0 +1,14 @@
+.filter-bar{
+    /*background:#f8fafc;*/
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.filter-title{
+    text-align:center;
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:8px;
+    color:#374151;
+}

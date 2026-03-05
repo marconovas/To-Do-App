@@ -129,11 +129,11 @@ function App() {
   }, [tasks]);
 
   return (
-    <div className="app-background d-flex justify-content-center py-5">
+    <div className="d-flex justify-content-center py-5">
       <Container style={{ maxWidth: "500px" }}>
-        <Card className="p-4 shadow-sm border-0">
+        <Card className="p-4 shadow-sm border-0 main-card">
 
-          <h2 className="text-center mb-4">Task Manager</h2>
+          <h2 className="text-center mb-4 app-title">Task Manager</h2>
 
           <SearchBar searchTask={searchTask} setSearchTask={setSearchTask} />
 
@@ -152,9 +152,6 @@ function App() {
 
           <TaskCounter active={active.length} finished={finished.length} total={totalTasks}/>
 
-          {finished.length > 0 && (
-            <ClearButton clearTasks={clearFinishedTasks}/>
-          )}
 
           <Sort setSort={setSortOrder}/>
 
@@ -171,8 +168,12 @@ function App() {
               onEdit={handleEdit}
               handleDragEnd={handleDragEnd}
               dragEnabled={dragEnabled}
-          />
+              />
 
+          {finished.length > 0 && (
+            <ClearButton clearTasks={clearFinishedTasks}/>
+          )}
+          
           {/* CONFIRM DELETE MODAL */}
           <Modal
             show={taskToDelete !== null}
