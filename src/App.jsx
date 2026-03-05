@@ -5,6 +5,7 @@ import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
 import TaskCounter from "./Components/TaskCounter";
 import ClearButton from "./Components/ClearButton";
+import SearchBar from "./Components/SearchBar";
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
   const finished = tasks.filter(task => task.completed);
   const totalTasks = active.length + finished.length;
 
+  //SEARCHING
+  const [searchTask, setSearchTask] = useState("");
+
 
   //FILTERS
   const filteredTasks = 
@@ -37,7 +41,12 @@ function App() {
     .filter(task => {
       if(priorityFilter === "all") return true;
       return task.priority === priorityFilter;
-    });
+    })
+    .filter(task => {
+      return task.text
+      .toLowerCase()
+      .includes(searchTask.trim().toLowerCase());
+    })
 
   const addTask = (newTask) => {
     setTasks(prev => [...prev, newTask]);
@@ -85,6 +94,8 @@ function App() {
         <Card className="p-4 shadow-sm border-0">
 
           <h2 className="text-center mb-4">Task Manager</h2>
+
+          <SearchBar searchTask={searchTask} setSearchTask={setSearchTask} />
 
           <TaskForm addTasks={addTask}/>
           
