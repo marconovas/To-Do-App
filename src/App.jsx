@@ -4,6 +4,7 @@ import { Button, Card, Container, FormControl, Modal, ModalFooter, ModalTitle } 
 import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
 import TaskCounter from "./Components/TaskCounter";
+import ClearButton from "./Components/ClearButton";
 
 function App() {
 
@@ -16,10 +17,12 @@ function App() {
   ///EDITING
   const [editingTask, setEditingTask] = useState(null);
   const [editText, setEditText] = useState("");
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
-  //TASK COUNTER
+  //TASK COUNTERS
   const active = tasks.filter(task => !task.completed);
   const finished = tasks.filter(task => task.completed);
+  const totalTasks = active.length + finished.length;
 
   const filteredTasks = 
   filter === "active" ?
@@ -41,6 +44,11 @@ function App() {
     );
   }
 
+  //CONFIRM DELETE
+  const confirmDelete = (id) => {
+    setTaskToDelete(id);
+  }
+
   const deleteTask = (id) => {
     setTasks(prev => 
       prev.filter(task => task.id !== id)
@@ -50,6 +58,13 @@ function App() {
   const handleEdit = (task) => {
     setEditingTask(task);
     setEditText(task.text);
+  }
+
+  const clearFinishedTasks = () => {
+    const confirm = window.confirm("Delete all finished Tasks?");
+    if(!confirm) return;
+
+    setTasks(tasks.filter(task => !task.completed));
   }
 
   useEffect(() => {
@@ -62,19 +77,54 @@ function App() {
         <Card className="p-4 shadow-sm border-0">
           <h2 className="text-center mb-4">Task Manager</h2>
 
-
           <TaskForm addTasks={addTask}/>
           
           <FilterBar setFilter={setFilter}/>
 
-          <TaskCounter active={active.length} finished={finished.length}/>
+          <TaskCounter active={active.length} finished={finished.length} total={totalTasks}/>
+
+          {finished.length > 0 && (
+            <ClearButton clearTasks={clearFinishedTasks}/>
+          )}
 
           <TaskList 
               tasks={filteredTasks} 
               onComplete={completeTask} 
-              onDelete={deleteTask}
+              onDelete={confirmDelete}
               onEdit={handleEdit}
           />
+
+          {/* CONFIRM DELETE */}
+          <Modal
+            show={taskToDelete !== null}
+            onHide={() => taskToDelete(null)}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Are you sure?</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              Are you sure that you want to delete this task?
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button
+                variant="success"
+                onClick={() => {
+                  deleteTask(taskToDelete);
+                  setTaskToDelete(null);
+                }}>
+                Yes
+              </Button>
+
+              <Button
+                variant="danger"
+                onClick={() => setTaskToDelete(null)}
+              >
+                No
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           <Modal 
             show={editingTask !== null}
