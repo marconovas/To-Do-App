@@ -1,7 +1,7 @@
 import TaskItem from "./TaskItem"
 
 
-export default function TaskList ({ tasks, onComplete, onDelete, onEdit }) {
+export default function TaskList ({ tasks, onComplete, onDelete, onEdit}) {
     if(tasks.length === 0){
         return <p className="text-center text-muted">No Tasks yet</p>
     }

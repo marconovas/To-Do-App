@@ -31,7 +31,11 @@ export default function TaskForm ({ addTasks }) {
                 />
             </Form.Group>
 
-            <Button variant="outline-dark" type="submit" className="w-100">
+            <Button 
+                variant="outline-dark" 
+                type="submit" 
+                className="w-100"
+            >
                 Add Task
             </Button>
         </Form>

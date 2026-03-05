@@ -3,6 +3,7 @@ import TaskForm from "./Components/TaskForm";
 import { Button, Card, Container, FormControl, Modal, ModalFooter, ModalTitle } from "react-bootstrap";
 import TaskList from "./Components/TaskList";
 import FilterBar from "./Components/FilterBar";
+import TaskCounter from "./Components/TaskCounter";
 
 function App() {
 
@@ -15,6 +16,10 @@ function App() {
   ///EDITING
   const [editingTask, setEditingTask] = useState(null);
   const [editText, setEditText] = useState("");
+
+  //TASK COUNTER
+  const active = tasks.filter(task => !task.completed);
+  const finished = tasks.filter(task => task.completed);
 
   const filteredTasks = 
   filter === "active" ?
@@ -61,6 +66,8 @@ function App() {
           <TaskForm addTasks={addTask}/>
           
           <FilterBar setFilter={setFilter}/>
+
+          <TaskCounter active={active.length} finished={finished.length}/>
 
           <TaskList 
               tasks={filteredTasks} 
