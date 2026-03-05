@@ -6,6 +6,7 @@ import FilterBar from "./Components/FilterBar";
 import TaskCounter from "./Components/TaskCounter";
 import ClearButton from "./Components/ClearButton";
 import SearchBar from "./Components/SearchBar";
+import Sort from "./Components/Sort";
 
 function App() {
 
@@ -30,9 +31,20 @@ function App() {
   //SEARCHING
   const [searchTask, setSearchTask] = useState("");
 
+  //TASK PRIORITY
+  const [sortOrder, setSortOrder] = useState("none");
+
+  const priorityOrder = {
+    high: 3,
+    medium: 2,
+    low: 1,
+    none: 0
+  };
+
   //FILTERS
   const filteredTasks = 
-    tasks.filter(task => {
+    [...tasks]
+    .filter(task => {
       if (statusFilter === "active") return !task.completed;
       if(statusFilter === "completed") return task.completed;
       return true;
@@ -45,6 +57,13 @@ function App() {
       return task.text
       .toLowerCase()
       .includes(searchTask.trim().toLowerCase());
+    })
+    .sort((a, b) => {  //SORT TASKS
+      if(sortOrder === "high")
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
+      if(sortOrder === "low")
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+      return 0;
     })
 
   const addTask = (newTask) => {
@@ -114,6 +133,8 @@ function App() {
             <ClearButton clearTasks={clearFinishedTasks}/>
           )}
 
+          <Sort setSort={setSortOrder}/>
+
           <TaskList 
               tasks={filteredTasks} 
               onComplete={completeTask} 
@@ -121,7 +142,7 @@ function App() {
               onEdit={handleEdit}
           />
 
-          {/* CONFIRM DELETE */}
+          {/* CONFIRM DELETE MODAL */}
           <Modal
             show={taskToDelete !== null}
             onHide={() => setTaskToDelete(null)}
@@ -170,7 +191,7 @@ function App() {
                 value={editPriority}
                 onChange={(e) => setEditPriority(e.target.value)}
               >
-                <option value="no priority">Select priority</option>
+                <option value="none">Select priority</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
